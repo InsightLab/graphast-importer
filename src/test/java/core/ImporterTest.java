@@ -8,8 +8,7 @@ import org.insightlab.graphast.query.map_matching.NaiveMapMatchingStrategy;
 import org.insightlab.graphast.query.shortestpath.DijkstraStrategy;
 import org.insightlab.graphast.query.shortestpath.ShortestPathStrategy;
 import org.insightlab.graphast.query.utils.DistanceVector;
-import org.insightlab.graphast.storage.GraphStorage;
-import org.insightlab.graphast.storage.GraphStorageFactory;
+import org.insightlab.graphast.serialization.GraphSerializer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,7 +24,7 @@ public class ImporterTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		Main.main(new String[] {osmDir, graphastDir});
-		GraphStorage storage = GraphStorageFactory.getKryoGraphStorage();
+		GraphSerializer storage = GraphSerializer.getInstance();
 		g = storage.load(graphastDir);
 	}
 
@@ -40,7 +39,8 @@ public class ImporterTest {
 		
 		MapMatchingStrategy mapMatching = new NaiveMapMatchingStrategy(g);
 		ShortestPathStrategy shortestPath = new DijkstraStrategy(g);
-		
+
+		System.out.println(mapMatching.getNearestNode(43.740174, 7.424376));
 		long sourceId = mapMatching.getNearestNode(43.740174, 7.424376).getId();
 		long targetId = mapMatching.getNearestNode(43.735554, 7.416147).getId();
 		

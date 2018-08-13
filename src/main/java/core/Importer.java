@@ -13,7 +13,7 @@ import org.insightlab.graphast.model.components.spatial_components.Geometry;
 import org.insightlab.graphast.model.components.spatial_components.Point;
 import org.insightlab.graphast.model.components.spatial_components.SpatialEdgeComponent;
 import org.insightlab.graphast.model.components.spatial_components.SpatialNodeComponent;
-import org.insightlab.graphast.storage.StorageUtils;
+import org.insightlab.graphast.serialization.SerializationUtils;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
@@ -82,14 +82,14 @@ public class Importer {
 	public void execute() {
 		
 		try {
-			this.graphastDir = StorageUtils.ensureDirectory(this.graphastDir);
+			this.graphastDir = SerializationUtils.ensureDirectory(this.graphastDir);
 			
 			File f = new File(this.graphastDir);
 			if (!f.exists()) f.mkdirs();
 		
-			Output nodeOutput = new Output(new FileOutputStream(this.graphastDir + "nodes.bin"));
-			Output edgeOutput = new Output(new FileOutputStream(this.graphastDir + "edges.bin"));
-			Output graphComponentOutput = new Output(new FileOutputStream(this.graphastDir + "graph_components.bin"));
+			Output nodeOutput = new Output(new FileOutputStream(this.graphastDir + "nodes.phast"));
+			Output edgeOutput = new Output(new FileOutputStream(this.graphastDir + "edges.phast"));
+			Output graphComponentOutput = new Output(new FileOutputStream(this.graphastDir + "graph_components.phast"));
 			graphComponentOutput.close();
 	
 			double initialTime = System.currentTimeMillis();
